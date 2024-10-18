@@ -39,9 +39,9 @@
 <body>
     <div class="box">
         <img src="../Assets/img/nyengir.jpeg" alt="">
-        <p> {{ $nama }}</p>
-        <p> {{ $npm }}</p>
-        <p> {{ $nama_kelas ?? 'Kelas tidak ditemukan' }}</p>
+        <p> {{ $user->nama }}</p>
+        <p> {{ $user->npm }}</p>
+        <p> {{ $user->nama_kelas ?? 'Kelas tidak ditemukan' }}</p>
     </div>
 </body>
 </html>
