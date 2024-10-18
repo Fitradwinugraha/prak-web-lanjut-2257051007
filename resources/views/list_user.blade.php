@@ -56,6 +56,7 @@
                 <th>Nama</th>
                 <th>NPM</th>
                 <th>Kelas</th>
+                <th>Foto</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -66,7 +67,21 @@
                 <td>{{ $user['nama'] }}</td>
                 <td>{{ $user['npm'] }}</td>
                 <td>{{ $user['nama_kelas'] }}</td>
-                <td><a href="{{ route('user.show', $user->id) }}" class="text-sky-500 underline underline-offset-2">Detail</a></td>
+                <td>
+                    <img src="{{ asset('' . $user->foto)}}" alt="Foto user" width="100">
+                </td>
+                <td>
+                    <a href="{{ route('user.show', $user['id']) }}" class="btn btn-primary btn-sm">View</a>
+
+                    <a href="{{ route('user.edit', $user['id']) }}" class="btn btn-warning btn-sm">Edit</a>
+
+                    <form action="{{ route('user.destroy', $user['id']) }}" method="POST" style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Apakah Anda Yakin ingin menghapus user ini?')">Delete</button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>
