@@ -136,9 +136,8 @@
         <div class="mb-3">
                 <label for="foto" class="form-label">Foto</label>
                 <input type="file" class="form-control" id="foto" name="foto">
-                @foreach($errors->get('foto') as $msg)
-                    <div class="error-message">{{ $msg }}</div>
-                @endforeach
+                
+            
             </div>
        
         <button type="submit" class="btn btn-custom w-100">Submit</button>
