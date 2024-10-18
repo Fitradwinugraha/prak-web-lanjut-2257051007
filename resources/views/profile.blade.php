@@ -41,7 +41,7 @@
         <img src="{{ asset($user->foto)}}" alt="">
         <p> {{ $user->nama }}</p>
         <p> {{ $user->npm }}</p>
-        <p> {{ $user->nama_kelas ?? 'Kelas tidak ditemukan' }}</p>
+        <p> {{ $kelas->nama_kelas ?? 'Kelas tidak ditemukan' }}</p>
     </div>
 </body>
 </html>
