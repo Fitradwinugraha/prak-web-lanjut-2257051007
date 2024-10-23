@@ -54,22 +54,24 @@
             <tr>
                 <th>ID</th>
                 <th>Nama</th>
-                <th>NPM</th>
+                <!-- <th>NPM</th> -->
                 <th>Kelas</th>
                 <th>Foto</th>
+                <th>IPK</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($users as $user)
             <tr>
-                <td>{{ $user['id'] }}</td>
-                <td>{{ $user['nama'] }}</td>
-                <td>{{ $user['npm'] }}</td>
-                <td>{{ $user['nama_kelas'] }}</td>
-                <td>
-                    <img src="{{ asset('' . $user->foto)}}" alt="Foto user" width="100">
-                </td>
+            <td>{{ $user->id }}</td>
+            <td>{{ $user->nama }}</td>
+            <td>{{ $user->nama_kelas }}</td>
+            <td>
+                <img src="{{ asset($user->foto) }}" alt="Foto user" width="100">
+            </td>
+            <td>{{ $user->ipk }}</td>
+
                 <td>
                     <a href="{{ route('user.show', $user['id']) }}" class="btn btn-primary btn-sm">View</a>
 

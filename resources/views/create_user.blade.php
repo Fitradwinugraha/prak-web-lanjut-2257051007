@@ -111,10 +111,18 @@
         </div>
 
        
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="npm" class="form-label">NPM</label>
             <input type="text" class="form-control" id="npm" name="npm" placeholder="Masukkan NPM" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
             @foreach($errors->get('npm') as $msg)
+                <div class="error-message">{{ $msg }}</div>
+            @endforeach
+        </div> -->
+
+        <div class="mb-3">
+            <label for="ipk" class="form-label">IPK</label>
+            <input type="number" step="0.01" class="form-control" id="ipk" name="ipk" placeholder="Masukkan IPK">
+            @foreach($errors->get('ipk') as $msg)
                 <div class="error-message">{{ $msg }}</div>
             @endforeach
         </div>

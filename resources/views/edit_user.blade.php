@@ -11,10 +11,10 @@
                 <label for="nama" class="form-label">Nama</label>
                 <input type="text" class="form-control" name="nama" id="nama" value="{{ old('nama', $user->nama) }}">
             </div>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label for="npm" class="form-label">NPM</label>
                 <input type="text" class="form-control" name="npm" id="npm" value="{{ old('npm', $user->npm) }}">
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="kelas_id">Kelas</label>
                 <select class="form-select" name="kelas_id" id="kelas_id" required>
