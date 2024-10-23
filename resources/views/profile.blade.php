@@ -40,7 +40,7 @@
     <div class="box">
         <img src="{{ asset($user->foto)}}" alt="">
         <p> {{ $user->nama }}</p>
-        <p> {{ $user->npm }}</p>
+        <!-- <p> {{ $user->npm }}</p> -->
         <p> {{ $kelas->nama_kelas ?? 'Kelas tidak ditemukan' }}</p>
     </div>
 </body>

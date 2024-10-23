@@ -50,16 +50,16 @@ class UserController extends Controller {
     public function store(UserRequest $request) {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'npm' => 'required|string|max:255',
             'kelas_id' => 'required|integer',
-            'foto' => 'nullable|image|mimes:png,jpeg, jpg, gif, svg|max:2048',
+            'ipk' => 'nullable|numeric|min:0|max:4.00', // Validasi IPK
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        if($request->hasFile('foto')) {
+        if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
             $fotoName = $foto->hashName();
             $fotoPath = $foto->move(('upload/img'), $fotoName);
-            
+
             // Ensure the path uses forward slashes
             $fotoPath = str_replace('\\', '/', $fotoPath);
         } else {
@@ -68,8 +68,8 @@ class UserController extends Controller {
 
         $this->userModel->create([
             'nama' => $request->input('nama'),
-            'npm' => $request->input('npm'),
             'kelas_id' => $request->input('kelas_id'),
+            'ipk' => $request->input('ipk'), // Simpan nilai IPK
             'foto' => $fotoPath,
         ]);
 
@@ -77,46 +77,54 @@ class UserController extends Controller {
     }
 
     public function show($id) {
-        $user = UserModel::findorFail($id);
-        $kelas = Kelas::find($user->kelas_id);
+        $user = $this->userModel->find($id);
 
-        $title = 'Detail ' . $user->nama;
+        $data = [
+            'nama' => $user->nama,
+            'ipk' => $user->ipk, // Tampilkan hanya nama dan IPK
+        ];
 
-        return view('profile', compact('user', 'kelas', 'title'));
+        return view('profile', $data);
     }
 
-    public function edit($id) {
-        $user = UserModel::findorFail($id);
-        $kelasModel = new Kelas();
-        $kelas = $kelasModel->getKelas();
+    public function update(UserRequest $request, $id) {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'kelas_id' => 'required|integer',
+            'ipk' => 'nullable|numeric|min:0|max:4.00', // Validasi IPK
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-        $title = 'Edit User';
+        $user = $this->userModel->find($id);
 
-        return view('edit_user', compact('user','kelas', 'title'));
-    }
-
-    public function update(Request $request, $id) {
-        $user = UserModel::findorFail($id);
-
-        $user->nama = $request->nama;
-        $user->npm = $request->npm;
-        $user->kelas_id = $request->kelas_id;
-
-        if($request->hasFile('foto')) {
-            $fileName = time() . '.' . $request->foto->extension();
-            $request->foto->move(public_path('upload/img'), $fileName);
-            $user->foto = 'upload/img/' . $fileName;
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fotoName = $foto->hashName();
+            $fotoPath = $foto->move(('upload/img'), $fotoName);
+            $fotoPath = str_replace('\\', '/', $fotoPath);
+        } else {
+            $fotoPath = $user->foto;
         }
 
-        $user->save();
+        $user->update([
+            'nama' => $request->input('nama'),
+            'kelas_id' => $request->input('kelas_id'),
+            'ipk' => $request->input('ipk'), // Update nilai IPK
+            'foto' => $fotoPath,
+        ]);
 
-        return redirect()->route('user.list')->with('succes', 'User updated successfully');
+        return redirect()->to('/user')->with('success', 'User berhasil diupdate');
     }
 
     public function destroy($id) {
-        $user = UserModel::findorFail($id);
+        $user = $this->userModel->find($id);
+
+        if ($user->foto && file_exists(public_path($user->foto))) {
+            unlink(public_path($user->foto)); // Hapus foto dari server
+        }
+
         $user->delete();
 
-        return redirect()->to('/user')->with('success', 'User has been deleted successfully');
+        return redirect()->to('/user')->with('success', 'User berhasil dihapus');
     }
 }
